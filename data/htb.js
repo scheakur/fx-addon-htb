@@ -15,7 +15,7 @@ self.port.on('show', function(url, data) {
     container.$data.num = 0;
     container.$data.bookmarks = [];
   } else {
-    container.$data.num = data.bookmarks.length;
+    container.$data.num = data.count;
     container.$data.bookmarks = data.bookmarks.filter(function(b) {
       return b.comment.length > 0;
     });
