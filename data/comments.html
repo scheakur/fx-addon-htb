@@ -6,32 +6,37 @@
     <style>
       html {
         background-color: #fff;
-      }
-      table {
-        border-collapse: collapse;
-        table-layout: fixed;
+        font-family: sans-serif;
       }
       * {
         margin: 0;
         padding: 0;
       }
       .info {
+        display: block;
         background-color: #eee;
         padding: 5px;
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
+        text-decoration: none;
+        font-size: 1rem;
+        color: #333;
+      }
+      .info:hover {
+        color: #27b;
+      }
+      .symbol {
+        padding: 3px;
       }
       .url {
         padding: 3px;
-        font-family: monospace;
       }
       .num {
         padding: 3px;
         font-family: monospace;
-        color: #27b;
       }
-      .comments {
+      .bookmarks {
         max-height: 560px;
         overflow: auto;
       }
@@ -40,6 +45,7 @@
         padding: 3px;
         font-size: 0.8rem;
         word-wrap: break-word;
+        border-bottom: 1px solid #ddd;
       }
       .user {
         margin-right: 10px;
@@ -59,11 +65,12 @@
   </head>
   <body>
     <div class="htb">
-      <div class="info">
+      <a class="info" href="{{hatena_url}}" target="_blank">
+        <span class="symbol">B!</span>
         <span class="num">{{num}}</span>
         <span class="url">{{url}}</span>
-      </div>
-      <div class="comments">
+      </a>
+      <div class="bookmarks">
         <div class="bookmark" v-repeat="bookmarks">
           <span class="user">{{user}}</span>
           <span class="comment">{{comment}}</span>

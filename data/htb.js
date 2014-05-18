@@ -10,6 +10,7 @@ var container = new Vue({
 
 self.port.on('show', function(url, data) {
   container.$data.url = url;
+  container.$data.hatena_url = 'http://b.hatena.ne.jp/entry/' + url;
 
   if (data === null) {
     container.$data.num = 0;
