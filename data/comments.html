@@ -13,6 +13,8 @@
         padding: 0;
       }
       .info {
+        box-sizing: border-box;
+        height: 30px;
         display: block;
         background-color: #eee;
         padding: 5px;
@@ -37,11 +39,12 @@
         font-family: monospace;
       }
       .bookmarks {
-        max-height: 560px;
+        max-height: 570px;
         overflow: auto;
       }
       .bookmark {
-        width: 590px;
+        box-sizing: border-box;
+        width: 100%;
         padding: 7px 3px;
         font-size: 0.8rem;
         word-wrap: break-word;
