@@ -50,6 +50,9 @@
         word-wrap: break-word;
         border-bottom: 1px solid #ddd;
       }
+      .icon {
+        vertical-align: middle;
+      }
       .user {
         margin-right: 10px;
         color: #27b;
@@ -75,6 +78,7 @@
       </a>
       <div class="bookmarks">
         <div class="bookmark" v-repeat="bookmarks">
+          <img class="icon" src="http://n.hatena.com/{{user}}/profile/image.gif?type=face&size=16">
           <span class="user">{{user}}</span>
           <span class="comment">{{comment}}</span>
           <span class="timestamp">{{timestamp.split(' ')[0]}}</span>
