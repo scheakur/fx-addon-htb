@@ -5,5 +5,7 @@
   "description": "Firefox Add-on for Hatena Bookmark",
   "author": "scheakur <scheakur@gmail.com>",
   "license": "MIT",
-  "version": "0.1"
+  "version": "0.1",
+  "icon": "data/htb-48.png",
+  "icon64": "data/htb-64.png"
 }
