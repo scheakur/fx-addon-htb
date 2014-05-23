@@ -5,7 +5,15 @@ var container = new Vue({
   data: {
     bookmarks: [],
   },
+  methods: {
+    hide: hide
+  },
 });
+
+
+function hide() {
+  self.port.emit('hide');
+}
 
 
 function iconUrl(user) {
