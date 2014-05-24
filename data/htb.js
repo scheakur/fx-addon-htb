@@ -1,7 +1,5 @@
-var container = document.querySelector('.htb');
-
-var container = new Vue({
-  el: container,
+const container = new Vue({
+  el: document.querySelector('.htb'),
   data: {
     bookmarks: [],
   },
