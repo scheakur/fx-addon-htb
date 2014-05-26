@@ -19,6 +19,12 @@ function iconUrl(user) {
 }
 
 
+function bookmarkUrl(user, timestamp, eid) {
+  var ymd = timestamp.split(' ')[0].replace(/\//g, '');
+  return 'http://b.hatena.ne.jp/' + user + '/' + ymd + '#bookmark-' + eid;
+}
+
+
 self.port.on('show', function(url, data) {
   container.$data.url = url;
   container.$data.hatena_url = 'http://b.hatena.ne.jp/entry/' + url;
@@ -32,6 +38,7 @@ self.port.on('show', function(url, data) {
       return b.comment.length > 0;
     }).map(function(d) {
       d.icon = iconUrl(d.user);
+      d.link = bookmarkUrl(d.user, d.timestamp, data.eid);
       return d;
     });
   }

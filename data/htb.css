@@ -64,6 +64,7 @@ html {
 	margin-right: 10px;
 	color: #27b;
 	font-family: monospace;
+	text-decoration: none;
 }
 
 .comment {

@@ -15,7 +15,7 @@
       <div class="bookmarks">
         <div class="bookmark" v-repeat="bookmarks">
           <img class="icon" src="{{icon}}">
-          <span class="user">{{user}}</span>
+          <a class="user" href="{{link}}" target="_blank" v-on="click: hide">{{user}}</a>
           <span class="comment">{{comment}}</span>
           <span class="timestamp">{{timestamp.split(' ')[0]}}</span>
         </div>
