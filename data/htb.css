@@ -15,17 +15,19 @@ html {
 	line-height: 30px;
 	display: block;
 	padding: 0 5px;
-	background-color: #eee;
+	background-color: #00838f;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	text-decoration: none;
 	font-size: 1rem;
-	color: #333;
+	color: #fff;
+	box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 5px;
 }
 
 .info:hover {
-	color: #27b;
+	background-color: #00acc1;
+	cursor: pointer;
 }
 
 .symbol {
