@@ -1,1 +1,1 @@
-Firefox Add-on for Hatena Bookmark
+# Firefox Add-on for Hatena Bookmark Comments
