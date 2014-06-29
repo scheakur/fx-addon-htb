@@ -6,7 +6,7 @@ git config --global user.name "travis-ci"
 cd build
 git clone --quiet https://github.com/scheakur/fx-addon-htb.git
 cd fx-addon-htb
-git branch -b gh-pages origin/gh-pages
+git checkout -b gh-pages origin/gh-pages
 cp ../../*.xpi ./
 git add -A
 git commit -m 'Update package by Travis CI [$TRAVIS_BUID_NUMBER]'
