@@ -4,7 +4,7 @@ python:
 script:
 - ./tool/build.sh
 after_success:
-- ./tool/push.sh
+- ./tool/push-to-gh-pages.sh
 env:
   global:
     secure: aeMco8qbJsvhK1PK1MEjFGCu34VEXfBWAjP9T+n5wDWDDWI4Q8kWu8aDgUOmPXNfLsk/w+v0T8GWhhH+jahMf2flM2F1nwjtkUomnDzqd2Htv0jluqXXaVxXFDNdqN5tnE4QClspu2+9kORaU94GfubE04VkN8ukDbw9Qs9ax+A=
