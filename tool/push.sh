@@ -9,5 +9,5 @@ cd fx-addon-htb
 git checkout -b gh-pages origin/gh-pages
 cp ../../*.xpi ./
 git add -A
-git commit -m 'Update package by Travis CI [$TRAVIS_BUID_NUMBER]'
+git commit -m 'Update package by Travis CI'
 git push --quiet https://$GH_TOKEN@github.com/scheakur/fx-addon-htb.git gh-pages 2> /dev/null
