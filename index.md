@@ -11,4 +11,4 @@ title: Firefox Add-on for Hatena Bookmark Comments
 
 
 ## ダウンロード
-- [htb.xpi](htb.xpi)
+- [htb.xpi]({{site.github.url}}/htb.xpi)
