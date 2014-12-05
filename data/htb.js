@@ -2,6 +2,9 @@ const container = new Vue({
   el: document.querySelector('.htb'),
   data: {
     bookmarks: [],
+    url: '',
+    hatena_url: '',
+    num: 0
   },
   methods: {
     hide: hide
@@ -26,15 +29,15 @@ function bookmarkUrl(user, timestamp, eid) {
 
 
 self.port.on('show', function(url, data) {
-  container.$data.url = url;
-  container.$data.hatena_url = 'http://b.hatena.ne.jp/entry/' + url;
+  container.url = url;
+  container.hatena_url = 'http://b.hatena.ne.jp/entry/' + url;
 
   if (data === null) {
-    container.$data.num = 0;
-    container.$data.bookmarks = [];
+    container.num = 0;
+    container.bookmarks = [];
   } else {
-    container.$data.num = data.count;
-    container.$data.bookmarks = data.bookmarks.filter(function(b) {
+    container.num = data.count;
+    container.bookmarks = data.bookmarks.filter(function(b) {
       return b.comment.length > 0;
     }).map(function(d) {
       d.icon = iconUrl(d.user);
