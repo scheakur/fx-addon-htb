@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SDK=addon-sdk-1.16
+SDK=addon-sdk-1.17
 FILE=$SDK.tar.gz
 
 mkdir build
