@@ -6,6 +6,6 @@
   "author": "scheakur <scheakur@gmail.com>",
   "license": "MIT",
   "version": "0.1",
-  "icon": "data/icon/htb-48.png",
-  "icon64": "data/icon/htb-64.png"
+  "icon": "data/icon/htb-colored-48.png",
+  "icon64": "data/icon/htb-colored-64.png"
 }
