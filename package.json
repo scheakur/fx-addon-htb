@@ -5,6 +5,7 @@
   "description": "Firefox Add-on for Hatena Bookmark Comments",
   "main": "index.js",
   "author": "scheakur <scheakur@gmail.com>",
+  "repository": "https://github.com/scheakur/fx-addon-htb.git",
   "engines": {
     "firefox": ">=33.0a1",
     "fennec": ">=33.0a1"
