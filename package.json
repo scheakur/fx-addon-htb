@@ -1,11 +1,13 @@
 {
+  "title": "Firefox Add-on for Hatena Bookmark Comments",
   "name": "htb",
-  "title": "htb",
-  "id": "jid1-EWEVYFVVaSOwlQ",
-  "description": "Firefox Add-on for Hatena Bookmark Comments",
-  "author": "scheakur <scheakur@gmail.com>",
-  "license": "MIT",
-  "version": "0.1",
-  "icon": "data/icon/htb-colored-48.png",
-  "icon64": "data/icon/htb-colored-64.png"
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "author": "scheakur",
+  "engines": {
+    "firefox": ">=33.0a1",
+    "fennec": ">=33.0a1"
+  },
+  "license": "MIT"
 }
