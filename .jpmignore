@@ -1,0 +1,7 @@
+*.xpi
+.*
+
+/node_modules
+/misc
+/test
+/tool
