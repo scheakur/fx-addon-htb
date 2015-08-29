@@ -1,7 +1,7 @@
 {
   "title": "htb",
   "name": "htb",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Firefox Add-on for Hatena Bookmark Comments",
   "main": "index.js",
   "author": "scheakur <scheakur@gmail.com>",
