@@ -31,12 +31,12 @@ let currentUrl = null;
 let currentRequestForDetail = null;
 let currentRequestForNum = null;
 
-panel.on('hide', function(state) {
+panel.on('hide', (state) => {
   preventOpenTemporary();
   buttonOff();
 });
 
-button.on('click', function(state) {
+button.on('click', (state) => {
   if (openIsPrevented()) {
     breakPreventer();
     buttonOff();
@@ -53,7 +53,7 @@ tabs.on('pageshow', update);
 
 tabs.on('activate', update);
 
-panel.port.on('hide', function() {
+panel.port.on('hide', () => {
   panel.hide();
 });
 
@@ -62,7 +62,7 @@ function preventOpenTemporary() {
   if (openPanelPreventer !== null) {
     timers.clearTimeout(openPanelPreventer);
   }
-  openPanelPreventer = timers.setTimeout(function() {
+  openPanelPreventer = timers.setTimeout(() => {
     openPanelPreventer = null;
   }, 300);
 }
@@ -118,7 +118,7 @@ function setIcon(tab, num) {
 function update(tab) {
   tab.attach({
     contentScriptFile: data.url('urlgetter.js'),
-    onMessage: function(url) {
+    onMessage: (url) => {
       if (tabs.activeTab.id === tab.id && url !== currentUrl) {
         currentUrl = url;
         updateIcon(tab, url);
@@ -130,11 +130,11 @@ function update(tab) {
 
 
 function updateIcon(tab, url) {
-  function onComplete(response) {
+  let onComplete = (response) => {
     let num = parseInt(response.text) || 0;
     setIcon(tab, num);
     currentRequestForNum = null;
-  }
+  };
 
   if (currentRequestForNum) {
     currentRequestForNum.off('complete', onComplete);
@@ -156,10 +156,10 @@ function updateIcon(tab, url) {
 
 
 function updatePanel(tab, url) {
-  function onComplete(response) {
+  let onComplete = (response) => {
     panel.port.emit('show', url, response.json);
     currentRequestForDetail = null;
-  }
+  };
 
   if (currentRequestForDetail) {
     currentRequestForDetail.off('complete', onComplete);
