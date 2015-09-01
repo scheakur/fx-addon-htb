@@ -12,6 +12,11 @@ function bookmarkUrl(user, time, eid) {
 }
 
 
+function hide() {
+  self.port.emit('hide');
+}
+
+
 export default class Bookmark extends React.Component {
 
   render() {
@@ -23,7 +28,7 @@ export default class Bookmark extends React.Component {
     return (
       <div className="bookmark">
         <img className="icon" src={icon}/>
-        <a className="user" target="_blank" href={link}>{b.user}</a>
+        <a className="user" target="_blank" onClick={hide} href={link}>{b.user}</a>
         <span className="comment">{b.comment}</span>
         <span className="timestamp">{time}</span>
       </div>
