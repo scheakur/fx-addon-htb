@@ -85,7 +85,6 @@ function openPanel() {
     height: 600,
     position: {
       top: 10,
-      right: 10,
     },
   });
 }
