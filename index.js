@@ -2,6 +2,7 @@ const tabs = require('sdk/tabs');
 const request = require('sdk/request');
 const data = require('sdk/self').data;
 const timers = require('sdk/timers');
+const { Hotkey } = require('sdk/hotkeys');
 
 const button = require('sdk/ui/button/toggle').ToggleButton({
   id: 'htb',
@@ -15,12 +16,27 @@ const button = require('sdk/ui/button/toggle').ToggleButton({
   badgeColor: '#00838f',
 });
 
+
 const panel = require('sdk/panel').Panel({
   contentURL: data.url('html/htb.html'),
   contentScriptFile: [
     data.url('bundle.js'),
-  ]
+  ],
+  width: 600,
+  height: 600,
+  position: {
+    top: 10,
+  },
 });
+
+
+const keyToOpenPanel = Hotkey({
+  combo: 'control-shift-b',
+  onPress: () => {
+    togglePanel();
+  },
+});
+
 
 const IGNORE_LIST = [
   'about:blank', 'about:newtab'
@@ -80,13 +96,16 @@ function breakPreventer() {
 
 
 function openPanel() {
-  panel.show({
-    width: 600,
-    height: 600,
-    position: {
-      top: 10,
-    },
-  });
+  panel.show();
+}
+
+
+function togglePanel() {
+  if (panel.isShowing) {
+    panel.hide();
+  } else {
+    panel.show();
+  }
 }
 
 

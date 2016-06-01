@@ -1,3 +1,5 @@
 *.xpi
 _site
 build
+
+data/bundle.js
