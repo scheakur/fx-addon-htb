@@ -2,7 +2,6 @@ const tabs = require('sdk/tabs');
 const request = require('sdk/request');
 const data = require('sdk/self').data;
 const timers = require('sdk/timers');
-const { Hotkey } = require('sdk/hotkeys');
 
 const button = require('sdk/ui/button/toggle').ToggleButton({
   id: 'htb',
@@ -30,7 +29,7 @@ const panel = require('sdk/panel').Panel({
 });
 
 
-const keyToOpenPanel = Hotkey({
+const keyToOpenPanel = require('sdk/hotkeys').Hotkey({
   combo: 'control-shift-b',
   onPress: () => {
     togglePanel();
@@ -46,6 +45,131 @@ let openPanelPreventer = null;
 let currentUrl = null;
 let currentRequestForDetail = null;
 let currentRequestForNum = null;
+
+const preventOpenTemporary = () => {
+  if (openPanelPreventer !== null) {
+    timers.clearTimeout(openPanelPreventer);
+  }
+  openPanelPreventer = timers.setTimeout(() => {
+    openPanelPreventer = null;
+  }, 300);
+}
+
+
+const openIsPrevented = () => {
+  return openPanelPreventer !== null;
+}
+
+
+const breakPreventer = () => {
+  timers.clearTimeout(openPanelPreventer);
+  openPanelPreventer = null;
+}
+
+
+const openPanel = () => {
+  panel.show();
+}
+
+
+const togglePanel = () => {
+  if (panel.isShowing) {
+    panel.hide();
+  } else {
+    panel.show();
+  }
+}
+
+
+const buttonOff = () => {
+  button.state('window', {
+    checked: false
+  });
+}
+
+
+const encode = (url) => {
+  return encodeURIComponent(url);
+}
+
+
+const shouldIgnore = (url) => {
+  return IGNORE_LIST.indexOf(url.toLowerCase()) >= 0;
+}
+
+
+const setIcon = (tab, num) => {
+  button.state(tab, {
+    badge: num || '',
+  });
+}
+
+
+const update = (tab) => {
+  tab.attach({
+    contentScriptFile: data.url('urlgetter.js'),
+    onMessage: (url) => {
+      if (tabs.activeTab.id === tab.id && url !== currentUrl) {
+        currentUrl = url;
+        updateIcon(tab, url);
+        updatePanel(tab, url);
+      }
+    },
+  });
+}
+
+
+const updateIcon = (tab, url) => {
+  let onComplete = (response) => {
+    let num = parseInt(response.text) || 0;
+    setIcon(tab, num);
+    currentRequestForNum = null;
+  };
+
+  if (currentRequestForNum) {
+    currentRequestForNum.off('complete', onComplete);
+    currentRequestForNum = null;
+  }
+
+  if (shouldIgnore(url)) {
+    setIcon(tab, 0);
+    return;
+  }
+
+  let encoded = encode(url);
+  currentRequestForNum = request.Request({
+    url: 'http://api.b.st-hatena.com/entry.count?url=' + encoded,
+  });
+  currentRequestForNum.on('complete', onComplete);
+  currentRequestForNum.get();
+}
+
+
+const updatePanel = (tab, url) => {
+  let onComplete = (response) => {
+    panel.port.emit('show', url, response.json);
+    currentRequestForDetail = null;
+  };
+
+  if (currentRequestForDetail) {
+    currentRequestForDetail.off('complete', onComplete);
+    currentRequestForDetail = null;
+  }
+
+  if (shouldIgnore(url)) {
+    panel.port.emit('show', url, null);
+    return;
+  }
+
+  let encoded = encode(url);
+
+  currentRequestForDetail = request.Request({
+    url: 'http://b.hatena.ne.jp/entry/jsonlite/?url=' + encoded,
+  });
+  currentRequestForDetail.on('complete', onComplete);
+  currentRequestForDetail.get();
+}
+
 
 panel.on('hide', (state) => {
   preventOpenTemporary();
@@ -72,128 +196,3 @@ tabs.on('activate', update);
 panel.port.on('hide', () => {
   panel.hide();
 });
-
-
-function preventOpenTemporary() {
-  if (openPanelPreventer !== null) {
-    timers.clearTimeout(openPanelPreventer);
-  }
-  openPanelPreventer = timers.setTimeout(() => {
-    openPanelPreventer = null;
-  }, 300);
-}
-
-
-function openIsPrevented() {
-  return openPanelPreventer !== null;
-}
-
-
-function breakPreventer() {
-  timers.clearTimeout(openPanelPreventer);
-  openPanelPreventer = null;
-}
-
-
-function openPanel() {
-  panel.show();
-}
-
-
-function togglePanel() {
-  if (panel.isShowing) {
-    panel.hide();
-  } else {
-    panel.show();
-  }
-}
-
-
-function buttonOff() {
-  button.state('window', {
-    checked: false
-  });
-}
-
-
-function encode(url) {
-  return encodeURIComponent(url);
-}
-
-
-function shouldIgnore(url) {
-  return IGNORE_LIST.indexOf(url.toLowerCase()) >= 0;
-}
-
-
-function setIcon(tab, num) {
-  button.state(tab, {
-    badge: num || '',
-  });
-}
-
-
-function update(tab) {
-  tab.attach({
-    contentScriptFile: data.url('urlgetter.js'),
-    onMessage: (url) => {
-      if (tabs.activeTab.id === tab.id && url !== currentUrl) {
-        currentUrl = url;
-        updateIcon(tab, url);
-        updatePanel(tab, url);
-      }
-    },
-  });
-}
-
-
-function updateIcon(tab, url) {
-  let onComplete = (response) => {
-    let num = parseInt(response.text) || 0;
-    setIcon(tab, num);
-    currentRequestForNum = null;
-  };
-
-  if (currentRequestForNum) {
-    currentRequestForNum.off('complete', onComplete);
-    currentRequestForNum = null;
-  }
-
-  if (shouldIgnore(url)) {
-    setIcon(tab, 0);
-    return;
-  }
-
-  let encoded = encode(url);
-  currentRequestForNum = request.Request({
-    url: 'http://api.b.st-hatena.com/entry.count?url=' + encoded,
-  });
-  currentRequestForNum.on('complete', onComplete);
-  currentRequestForNum.get();
-}
-
-
-function updatePanel(tab, url) {
-  let onComplete = (response) => {
-    panel.port.emit('show', url, response.json);
-    currentRequestForDetail = null;
-  };
-
-  if (currentRequestForDetail) {
-    currentRequestForDetail.off('complete', onComplete);
-    currentRequestForDetail = null;
-  }
-
-  if (shouldIgnore(url)) {
-    panel.port.emit('show', url, null);
-    return;
-  }
-
-  let encoded = encode(url);
-
-  currentRequestForDetail = request.Request({
-    url: 'http://b.hatena.ne.jp/entry/jsonlite/?url=' + encoded,
-  });
-  currentRequestForDetail.on('complete', onComplete);
-  currentRequestForDetail.get();
-}
