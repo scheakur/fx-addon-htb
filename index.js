@@ -120,8 +120,8 @@ const update = (tab) => {
 
 
 const updateIcon = (tab, url) => {
-  let onComplete = (response) => {
-    let num = parseInt(response.text) || 0;
+  const onComplete = (response) => {
+    const num = parseInt(response.text) || 0;
     setIcon(tab, num);
     currentRequestForNum = null;
   };
@@ -136,7 +136,7 @@ const updateIcon = (tab, url) => {
     return;
   }
 
-  let encoded = encode(url);
+  const encoded = encode(url);
   currentRequestForNum = request.Request({
     url: 'http://api.b.st-hatena.com/entry.count?url=' + encoded,
   });
@@ -146,7 +146,7 @@ const updateIcon = (tab, url) => {
 
 
 const updatePanel = (tab, url) => {
-  let onComplete = (response) => {
+  const onComplete = (response) => {
     panel.port.emit('show', url, response.json);
     currentRequestForDetail = null;
   };
@@ -161,7 +161,7 @@ const updatePanel = (tab, url) => {
     return;
   }
 
-  let encoded = encode(url);
+  const encoded = encode(url);
 
   currentRequestForDetail = request.Request({
     url: 'http://b.hatena.ne.jp/entry/jsonlite/?url=' + encoded,
