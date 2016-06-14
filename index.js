@@ -171,12 +171,13 @@ const updatePanel = (tab, url) => {
 }
 
 
-panel.on('hide', (state) => {
+const hide = () => {
   preventOpenTemporary();
   buttonOff();
-});
+};
 
-button.on('click', (state) => {
+
+const toggle = () => {
   if (openIsPrevented()) {
     breakPreventer();
     buttonOff();
@@ -185,12 +186,13 @@ button.on('click', (state) => {
   if (state.checked) {
     openPanel();
   }
-});
+};
 
+
+panel.on('hide', hide);
+button.on('click', toggle);
 tabs.on('ready', update);
-
 tabs.on('pageshow', update);
-
 tabs.on('activate', update);
 
 panel.port.on('hide', () => {
